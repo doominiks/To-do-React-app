@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import './ToDoList.css';
 import ToDoItem from './ToDoItem'
 import InputAdd from './InputAdd'
@@ -28,9 +26,7 @@ class Todo extends Component {
   }
 
   handleSearchItem = e => {
-    const {
-      items
-    } = this.state
+    const { items } = this.state
     let searchedValue = e.target.value.toLowerCase(),
       updatedItems = items.filter((el) => {
         let itemValue = el.text.toLowerCase();
@@ -44,10 +40,7 @@ class Todo extends Component {
 
 
   handleAddItem = e => {
-    const {
-      items,
-      addValue
-    } = this.state
+    const { items, addValue } = this.state
 
     if (e.key === 'Enter' && addValue !== '') {
       const newItems = [...items];
@@ -95,67 +88,33 @@ class Todo extends Component {
 
   render() {
 
-      const {
-        addActive,
-        addValue,
-        completed,
-        updatedItems
-      } = this.state
-      const listItems = updatedItems.map((item, index) =>
-          <
-          ToDoItem key = {
-            item.id
-          }
-          deleteItem = {
-            this.handleDeleteItem.bind(this, item.id)
-          }
-          text = {
-            item.text
-          }
-          completed = {
-            this.handleCompletedItem.bind(this, index)
-          }
-          toggleClass = {
-            completed.includes(index)
-          }
-          />)
+    const { addActive, addValue, completed, updatedItems } = this.state
+    const listItems = updatedItems.map((item, index) =>
+      <ToDoItem
+        key={item.id}
+        deleteItem={this.handleDeleteItem.bind(this, item.id)}
+        text={item.text}
+        completed={this.handleCompletedItem.bind(this, index)}
+        toggleClass={completed.includes(index)}
+      />)
 
-          return ( <
-            div className = "container" >
-            <
-            h1 > To - do list <
-              button
-            className = "fa fa-plus"
-            onClick = {
-              this.handleAddInputShow
-            } >
-            <
-            /button> <
-            /h1 > {
-              addActive &&
-                <
-                InputAdd
-              value = {
-                addValue
-              }
-              change = {
-                this.handleAddInputChange
-              }
-              keypress = {
-                this.handleAddItem
-              }
-              />} <
-              InputSearch
-              change = {
-                this.handleSearchItem
-              }
-              /> {
-                updatedItems ? < ul > {
-                    listItems
-                  } < /ul> : updatedItems} <
-                  /div>
-              );
-            }
-          }
+    return (
+      <div className="container" >
+        <h1 > To - do list <button
+          className="fa fa-plus"
+          onClick={this.handleAddInputShow}>
+        </button></h1 >
+        {addActive &&
+          <InputAdd
+            value={addValue}
+            change={this.handleAddInputChange}
+            keypress={this.handleAddItem}
+          />}
+        <InputSearch
+          change={this.handleSearchItem}
+        />
+        {updatedItems ? <ul> {listItems}</ul> : updatedItems} </div>);
+  }
+}
 
-          export default Todo;
+export default Todo;
